@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Tambah Data Produk</title>
+</head>
+<body>
+    <h1>Form Data Tambah Produk</h1>
+    <form id="myForm" onsubmit="kelolasubmit(Form)" onreset="kelolareset()">
+        <label for="nama_produk">Nama Produk : <input type="text" minlength="5" maxlength="30" required ><br ></label><br />
+        <label for="deskripsi">Deskripsi : <textarea id="deskripsi" name="deskripsi" rows="4" cols="35" required ></textarea></label><br />
+        <label for="kategori">Kategori </label>
+            <select id="kategori" onchange="updateSubkategori()">
+                <option value="Pilih Kategori">--Pilih Kategori--</option>
+                <option value="Pakaian">Baju</option>
+                <option value="Elektronik">Elektronik</option>
+                <option value="Dokumen">Dokumen</option>
+            </select><br />
+        <label for="Sub Kategori">Sub Kategori : </label>
+        <select id="Sub Kategori" name="Sub Kategori" required>
+            <option value="Pilih Sub Kategori">--Pilih Sub Kategori--</option>
+        </select>
+
+        <script>
+            function updateSubkategori(){
+                const kategori = document.getElementById("kategori").value;
+                const subkategori = document.getElementById("Sub Kategori");
+                subkategori.innerHTML = "";
+
+                let options =[];
+
+                if (kategori === "Pakaian"){
+                    options = ["Baju Pria", "Baju Wanita", "Baju Anak"];
+                } else if (kategori === "Elektronik"){
+                    options = ["TV", "Kulkas", "Mesin Cuci"];
+                } else if (kategori === "Dokumen"){
+                    options = ["Surat Tanah", "Ijazah", "Kartu Keluarga"]
+                } else if (kategori === "Pilih Kategori"){
+                    options = ["--Pilih Sub Kategori--"];
+                }
+
+                options.forEach(function(item){
+                    let option = document.createElement("option");
+                    option.value = item.toLowerCase();
+                    option.textContent = item;
+                    subkategori.appendChild(option);
+                });
+            }
+        </script><br />
+
+        <label for="harga_satuan">Harga Satuan : <input type="number" id="harga_satuan" name="harga" required /></label><br />
+        <label for="Grosir">Grosir : </label>
+        <input type="radio" id="ya" name="tersedia" value="ya" onchange="toogleInput()" />
+        <label for="ya">Ya</label>
+        <input type="radio" id="tidak" name="tersedia" value="tidak" onchange="toogleInput()" />
+        <label for="tidak">Tidak</label><br />
+
+        <label for="harga">Harga Grosir : <input type="number" id="harga" name="harga" placeholder="Masukkan Harga Grosir" required /></label><br />
+
+        <script>
+            function toogleInput() {
+                var isIYA = document.getElementById("ya").checked;
+                var inputlain = document.getElementById("harga");
+
+                if (isIYA) {
+                    inputlain.style.display = "block";
+                    inputlain.required = true;
+                } else {
+                    inputlain.style.display = "none";
+                    inputlain.required = false;
+                    inputlain.value = "";
+                }
+            }
+        </script>
+        <label>Jasa Kirim:</label><br>
+        <input type="checkbox" id="fitur1" name="fitur[]" value="JNE">
+        <label for="fitur1">JNE</label><br>
+        <input type="checkbox" id="fitur2" name="fitur[]" value="TIKI">
+        <label for="fitur2">TIKI</label><br>
+        <input type="checkbox" id="fitur2" name="fitur[]" value="NINJA Express">
+        <label for="fitur3">NINJA Express</label><br>
+        <input type="checkbox" id="fitur2" name="fitur[]" value="WAHANA">
+        <label for="fitur4">WAHANA</label><br>
+        <input type="checkbox" id="fitur3" name="fitur[]" value="SiCEPAT">
+        <label for="fitur5">SiCEPAT</label><br><br>
+
+        <label for="captchaInput">Captcha : </label><br />
+                <span id="captchaDisplay" style="font-weight : bold; font: size 180px;"></span><br>
+                <input type="text" id="captchaInput" name="captchaInput" placeholder="Masukkan captcha di atas" required><br>
+                
+                <script>
+                    function generateCaptcha() {
+                        var captchaLength = 5;
+                        var captcha = "";
+                        for (var i = 0; i < captchaLength; i++) {
+                    var randomChar = String.fromCharCode(98 + Math.floor(Math.random() * 26));
+                    captcha += randomChar;
+                }
+                document.getElementById("captchaDisplay").textContent = captcha;
+            }
+            window.onload = generateCaptcha;
+        </script>
+
+        <input type="submit" value="Submit"/>
+        <input type="reset" value="Reset"/>
+
+        <script>
+            function kelolasubmit(Form){
+                Form.preventDefault();
+
+                document.getElementById("pesan").textContent = 
+                "Terima Kasih sudah mengisi!";
+            }
+
+            function kelolareset(){
+                document.getElementById.textContent = "";
+            }
+        </script>
+        <p id="pesan"></p>
+    </form>
+</body>
+</html>
